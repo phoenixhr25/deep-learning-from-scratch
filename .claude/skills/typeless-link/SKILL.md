@@ -1,15 +1,19 @@
 ---
 name: typeless-link
-description: Creates a plain Markdown link to any resource in this deep learning codebase — notebook, chapter, or source file — without specifying a link type. Use when you need a quick clickable reference to a notebook chapter, module, or concept.
-argument-hint: [chapter-number or topic or filename]
+description: Takes raw voice-transcribed text from Typeless speech recognition and transforms it into polished, usable content — notes, code, or documentation. Use when the user pastes dictated text that needs cleanup and restructuring.
+argument-hint: [raw voice-transcribed text]
 ---
 
-Create a plain Markdown link to $ARGUMENTS in this deep learning project.
+Process the following Typeless voice-transcribed input and produce clean, usable content:
+
+$ARGUMENTS
 
 Steps:
-1. Search for matching files using Glob with patterns like `**/*$ARGUMENTS*` or `notebooks/ch$ARGUMENTS.ipynb`
-2. For notebooks, prefer paths under `notebooks/` (e.g., `notebooks/ch03.ipynb`)
-3. For Python source files, use the relative path (e.g., `common/layers.py`)
-4. Return the link in plain Markdown: `[label](path)` — no type prefix, no role syntax
-5. If multiple matches exist, list all relevant links with concise labels
-6. Use descriptive labels based on chapter topic or filename, not the raw path
+1. Read the raw text — it may contain speech artifacts, repetitions, or informal phrasing
+2. Identify the intent: is this a concept explanation, a code request, a question, or a note?
+3. Based on intent, produce one of:
+   - **Learning note**: structured Markdown with key points and examples from this deep learning codebase
+   - **Code snippet**: clean Python code referencing the relevant file in this repo (use Glob/Grep to find it)
+   - **Documentation**: polished paragraph suitable for a README or notebook cell
+4. If the content relates to a chapter or layer in this project, link to the relevant notebook under `notebooks/` or source file under `common/`
+5. Output the finished content ready to paste — no explanation needed, just the result
